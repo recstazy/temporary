@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9125408ee86a7c34ab45c13a5a1d7bfe, type: 3}
   m_Name: RobotStabSettings
   m_EditorClassIdentifier: 
-  connectedBody: {fileID: 0}
-  attraction: 300
-  maxForce: 10000
-  distanceProportion: 1
-  maxDrag: 15
-  maxAngularDrag: 0.8
-  rotationStab: 0
-  rotationStabSpeed: 3
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 200000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 40

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.unity.collab-proxy": "1.2.16",
+    "com.unity.gameon.unityhelpers": "https://gitlab.gameonproduction.com/packages/unityhelpers.git",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.0",
     "com.unity.render-pipelines.universal": "7.3.1",
@@ -39,5 +40,11 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.unity.gameon.unityhelpers": {
+      "revision": "HEAD",
+      "hash": "93017af138c18c440955abadf250db6ec64e82f2"
+    }
   }
 }
