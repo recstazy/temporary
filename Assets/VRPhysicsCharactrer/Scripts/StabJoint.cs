@@ -13,6 +13,9 @@ namespace Recstazy.VRPhysics
         private Rigidbody connectedBody;
 
         [SerializeField]
+        private bool useLocalPositions = false;
+
+        [SerializeField]
         private StabSettings settings;
 
         private Vector3[] angularVelocities = new Vector3[3];
@@ -51,8 +54,17 @@ namespace Recstazy.VRPhysics
 
                 if (Settings.PositionStab)
                 {
-                    Vector3 worldTargetPosition = transform.position;
-                    var distanceVector = worldTargetPosition - CurrentBody.position;
+                    Vector3 distanceVector;
+
+                    if (useLocalPositions)
+                    {
+                        distanceVector = transform.localPosition - CurrentBody.transform.localPosition;
+                    }
+                    else
+                    {
+                        distanceVector = transform.position - CurrentBody.position;
+                    }
+
                     var distanceSquared = distanceVector.sqrMagnitude;
                     distanceSquared *= Settings.DistanceProportion;
 
@@ -81,18 +93,39 @@ namespace Recstazy.VRPhysics
                         force = force.normalized * Settings.MaxForce;
                     }
 
-                    CurrentBody.AddForce(force * Time.fixedDeltaTime, ForceMode.Force);
+                    if (useLocalPositions)
+                    {
+                        CurrentBody.AddRelativeForce(force * Time.fixedDeltaTime, ForceMode.Force);
+                    }
+                    else
+                    {
+                        CurrentBody.AddForce(force * Time.fixedDeltaTime, ForceMode.Force);
+                    }
                 }
 
                 if (Settings.RotationStab)
                 {
-                    var startRotation = CurrentBody.rotation.eulerAngles;
-                    alpha = Time.deltaTime * Settings.RotationStabSpeed;
-                    CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
+                    if (useLocalPositions)
+                    {
+                        var startRotation = CurrentBody.rotation.eulerAngles;
+                        alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
+                        CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
 
-                    Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, 30f);
-                    CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
-                    WriteAngularVelocity(CurrentBody.rotation.eulerAngles - startRotation);
+                        Quaternion rotation = Quaternion.Inverse(CurrentBody.transform.localRotation) * Quaternion.RotateTowards(CurrentBody.transform.localRotation, transform.localRotation, 30f);
+                        rotation = CurrentBody.rotation * rotation;
+                        CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
+                        WriteAngularVelocity(CurrentBody.rotation.eulerAngles - startRotation);
+                    }
+                    else
+                    {
+                        var startRotation = CurrentBody.rotation.eulerAngles;
+                        alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
+                        CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
+
+                        Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, 30f);
+                        CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
+                        WriteAngularVelocity(CurrentBody.rotation.eulerAngles - startRotation);
+                    }
                 }
             }
         }

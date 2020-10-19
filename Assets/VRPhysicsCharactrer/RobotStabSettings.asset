@@ -15,9 +15,9 @@ MonoBehaviour:
   settings:
     positionStab: 1
     attraction: 100000
-    maxForce: 200000
+    maxForce: 100000
     distanceProportion: 10
     maxDrag: 19.2
     maxAngularDrag: 1.08
     rotationStab: 1
-    rotationStabSpeed: 40
+    rotationStabSpeed: 15
