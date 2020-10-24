@@ -1,4 +1,4 @@
-﻿Shader "Universal Render Pipeline/LitTestNoEditor"
+﻿Shader "Universal Render Pipeline/TransparentShadowReciever"
 {
     Properties {}
 
