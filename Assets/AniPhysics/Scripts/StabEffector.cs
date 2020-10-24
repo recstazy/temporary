@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Recstazy.VRPhysics
+namespace Recstazy.AniPhysics
 {
     [System.Serializable]
     public class StabEffector

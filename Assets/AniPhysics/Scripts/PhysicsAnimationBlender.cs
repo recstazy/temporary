@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
-namespace Recstazy.VRPhysics
+namespace Recstazy.AniPhysics
 {
     public class PhysicsAnimationBlender : MonoBehaviour
     {
@@ -40,16 +41,38 @@ namespace Recstazy.VRPhysics
 
         #endregion
 
-        private void Awake()
+        private void Start()
         {
             SetupBodies(touples);
         }
+
+#if UNITY_EDITOR
+
+        [ContextMenu("ExecuteSetupInEditor")]
+        private void ExecuteSetupInEditor()
+        {
+            SetupBodies(touples);
+
+            foreach (var t in touples)
+            {
+                UnityEditor.EditorUtility.SetDirty(t.Reference.gameObject);
+                UnityEditor.EditorUtility.SetDirty(t.Target.gameObject);
+            }
+        }
+
+#endif
 
         private void SetupBodies(TransformTouple[] touples)
         {
             foreach (var t in touples)
             {
-                var stab = t.Reference.gameObject.AddComponent<StabJoint>();
+                var stab = t.Reference.GetComponent<BoneAttractor>();
+
+                if (stab == null)
+                {
+                    stab = t.Reference.gameObject.AddComponent<BoneAttractor>();
+                }
+
                 var body = t.Target.GetComponent<Rigidbody>();
 
                 if (body == null)
@@ -59,8 +82,12 @@ namespace Recstazy.VRPhysics
 
                 Bodies.Add(body);
 
-                stab.SetAttachedBody(body);
-                stab.Settings = new StabSettings(defaultSettings.Settings);
+                if (stab.ConnectedBody == null)
+                {
+                    stab.SetAttachedBody(body);
+                    stab.Settings = new StabSettings(defaultSettings.Settings);
+                }
+
                 stab.Settings.Effector = effectBlend;
             }
         }

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameOn.UnityHelpers;
 
-namespace Recstazy.VRPhysics
+namespace Recstazy.AniPhysics
 {
     public class DecreaseAnimationOnCollision : MonoBehaviour
     {
         [SerializeField]
-        private float duration = 1f;
+        private float decayTime = 1f;
+
+        [SerializeField]
+        private float releaseTime = 1f;
 
         [SerializeField]
         private float effect = 0.1f;
@@ -54,6 +57,9 @@ namespace Recstazy.VRPhysics
 
         private IEnumerator EffectRoutine()
         {
+            blender.Effector.Effect = effect;
+            yield return new WaitForSeconds(decayTime);
+
             float t = 0f;
 
             while (t <= 1f)
@@ -61,7 +67,7 @@ namespace Recstazy.VRPhysics
                 blender.Effector.Effect = Mathf.Lerp(effect, defaultEffect, t);
 
                 yield return new WaitForFixedUpdate();
-                t += Time.fixedDeltaTime / duration;
+                t += Time.fixedDeltaTime / releaseTime;
             }
 
             blender.Effector.Effect = defaultEffect;

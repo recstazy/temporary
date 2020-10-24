@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Recstazy.VRPhysics
+namespace Recstazy.AniPhysics
 {
-    public class StabJoint : MonoBehaviour
+    public class BoneAttractor : MonoBehaviour
     {
         #region Fields
 
@@ -20,13 +20,16 @@ namespace Recstazy.VRPhysics
 
         private Vector3[] angularVelocities = new Vector3[3];
 
+        private float startDrag = 0f;
+        private float startAngularDrag = 0.05f;
+
         #endregion
 
         #region Properties
 
         public bool IsGrabbing => CurrentBody != null;
+        public Rigidbody ConnectedBody => connectedBody;
         public Rigidbody CurrentBody { get; private set; }
-        public PhysicsLock PhysicsLock { get; private set; }
         public StabSettings Settings
         {
             get => settings;
@@ -70,22 +73,11 @@ namespace Recstazy.VRPhysics
 
                     alpha = distanceSquared / 100f;
 
-                    float targetDrag = Mathf.Lerp(Settings.MaxDrag, PhysicsLock.StartDrag, alpha);
-                    float targetAngularDrag = Mathf.Lerp(Settings.MaxAngularDrag, PhysicsLock.StartAngularDrag, alpha);
+                    float targetDrag = Mathf.Lerp(Settings.MaxDrag, startDrag, alpha);
+                    float targetAngularDrag = Mathf.Lerp(Settings.MaxAngularDrag, startAngularDrag, alpha);
 
-                    if (PhysicsLock.ConnectionsCount == 1)
-                    {
-                        PhysicsLock.CurrentDrag = targetDrag;
-                        PhysicsLock.CurrentAngularDrag = targetAngularDrag;
-                    }
-                    else
-                    {
-                        PhysicsLock.CurrentDrag = Mathf.Max(targetDrag, PhysicsLock.CurrentDrag);
-                        PhysicsLock.CurrentAngularDrag = Mathf.Max(targetAngularDrag, PhysicsLock.CurrentAngularDrag);
-                    }
-
-                    CurrentBody.drag = PhysicsLock.CurrentDrag;
-                    CurrentBody.angularDrag = PhysicsLock.CurrentAngularDrag;
+                    CurrentBody.drag = targetDrag;
+                    CurrentBody.angularDrag = targetAngularDrag;
                     var force = distanceVector.normalized * Settings.Attraction * distanceSquared;
 
                     if (force.magnitude > Settings.MaxForce)
@@ -156,18 +148,12 @@ namespace Recstazy.VRPhysics
         {
             if (CurrentBody != null)
             {
-                CurrentBody.drag = PhysicsLock.StartDrag;
-                CurrentBody.angularDrag = PhysicsLock.StartAngularDrag;
-                PhysicsLock.ConnectionsCount--;
+                CurrentBody.drag = startDrag;
+                CurrentBody.angularDrag = startAngularDrag;
 
-                if (PhysicsLock.ConnectionsCount <= 0)
+                if (Settings.RotationStab)
                 {
-                    if (Settings.RotationStab)
-                    {
-                        CurrentBody.AddTorque(GetAngularvelocity(), ForceMode.VelocityChange);
-                    }
-
-                    Destroy(PhysicsLock);
+                    CurrentBody.AddTorque(GetAngularvelocity(), ForceMode.VelocityChange);
                 }
 
                 ChangeDetectionModeOnSleep(CurrentBody, CollisionDetectionMode.Discrete);
@@ -181,17 +167,8 @@ namespace Recstazy.VRPhysics
 
             if (CurrentBody != null)
             {
-                PhysicsLock = CurrentBody.GetComponent<PhysicsLock>();
-
-                if (PhysicsLock == null)
-                {
-                    PhysicsLock = CurrentBody.gameObject.AddComponent<PhysicsLock>();
-                    PhysicsLock.StartDrag = CurrentBody.drag;
-                    PhysicsLock.StartAngularDrag = CurrentBody.angularDrag;
-                }
-
-                PhysicsLock.ConnectionsCount++;
-
+                startDrag = CurrentBody.drag;
+                startAngularDrag = CurrentBody.angularDrag;
                 CurrentBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             }
         }

@@ -101,6 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7732919721457832407}
+  - component: {fileID: 350574920}
   m_Layer: 0
   m_Name: mixamorig:LeftUpLeg
   m_TagString: Untagged
@@ -123,6 +124,29 @@ Transform:
   m_Father: {fileID: 1625872994500185406}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &350574920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720797588226312363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 100000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 15
 --- !u!1 &727797139131635972
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3650582550361956167}
+  - component: {fileID: 744012870}
   m_Layer: 0
   m_Name: mixamorig:RightForeArm
   m_TagString: Untagged
@@ -403,6 +428,29 @@ Transform:
   m_Father: {fileID: 1013303437708329695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &744012870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2355929746100328643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 10000
+    maxForce: 10000
+    distanceProportion: 3.15
+    maxDrag: 8.3
+    maxAngularDrag: 0.33
+    rotationStab: 1
+    rotationStabSpeed: 40
 --- !u!1 &2738521442028232946
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9021041243649739966}
+  - component: {fileID: 665178215}
   m_Layer: 0
   m_Name: mixamorig:RightFoot
   m_TagString: Untagged
@@ -434,6 +483,29 @@ Transform:
   m_Father: {fileID: 6760330857980592159}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &665178215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738521442028232946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 0
+  settings:
+    positionStab: 1
+    attraction: 10000
+    maxForce: 10000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 60
 --- !u!1 &2812637802975062478
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6760330857980592159}
+  - component: {fileID: 977883005}
   m_Layer: 0
   m_Name: mixamorig:RightLeg
   m_TagString: Untagged
@@ -579,6 +652,29 @@ Transform:
   m_Father: {fileID: 4062972775460889695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &977883005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3261167793741788734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 0
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 100000
+    distanceProportion: 3.9
+    maxDrag: 6.6
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 15
 --- !u!1 &3723721000558011105
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +715,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4805891213626840512}
+  - component: {fileID: 2084308276}
   m_Layer: 0
   m_Name: mixamorig:LeftFoot
   m_TagString: Untagged
@@ -641,6 +738,29 @@ Transform:
   m_Father: {fileID: 994501411401328983}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2084308276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841579547643745085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 0
+  settings:
+    positionStab: 1
+    attraction: 10000
+    maxForce: 10000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 60
 --- !u!1 &3876604132598310429
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1625872994500185406}
+  - component: {fileID: 1917616429}
   m_Layer: 0
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -767,6 +888,29 @@ Transform:
   m_Father: {fileID: 1254973987078156216}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1917616429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031461649147332970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 0
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 100000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 40
 --- !u!1 &5112658302988557939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,6 +1354,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1013303437708329695}
+  - component: {fileID: 1838642849}
   m_Layer: 0
   m_Name: mixamorig:RightArm
   m_TagString: Untagged
@@ -1232,6 +1377,29 @@ Transform:
   m_Father: {fileID: 5421938631109757624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1838642849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6938620960502037782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 10000
+    maxForce: 10000
+    distanceProportion: 4.7
+    maxDrag: 8.3
+    maxAngularDrag: 0.33
+    rotationStab: 1
+    rotationStabSpeed: 40
 --- !u!1 &6948423449605742675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,6 +1409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2493852148394881258}
+  - component: {fileID: 120925845}
   m_Layer: 0
   m_Name: mixamorig:Spine1
   m_TagString: Untagged
@@ -1263,6 +1432,29 @@ Transform:
   m_Father: {fileID: 1637255290891323544}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &120925845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6948423449605742675}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 100000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 15
 --- !u!1 &7516289814673963207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,6 +1495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9038066245931239759}
+  - component: {fileID: 438798518}
   m_Layer: 0
   m_Name: mixamorig:Head
   m_TagString: Untagged
@@ -1325,6 +1518,29 @@ Transform:
   m_Father: {fileID: 7500920323014191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &438798518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7602900630036647391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 0
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 50000
+    distanceProportion: 10
+    maxDrag: 24.9
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 15
 --- !u!1 &7621117659224635153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,6 +1612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 994501411401328983}
+  - component: {fileID: 1227384905}
   m_Layer: 0
   m_Name: mixamorig:LeftLeg
   m_TagString: Untagged
@@ -1418,6 +1635,29 @@ Transform:
   m_Father: {fileID: 7732919721457832407}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1227384905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8001476297009583242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 0
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 100000
+    distanceProportion: 3.9
+    maxDrag: 6.6
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 15
 --- !u!1 &8153799601848684066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,6 +1667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2472118030396690691}
+  - component: {fileID: 1024284945}
   m_Layer: 0
   m_Name: mixamorig:LeftArm
   m_TagString: Untagged
@@ -1441,14 +1682,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8153799601848684066}
-  m_LocalRotation: {x: 0.017363599, y: -0.018221265, z: -0.0075610545, w: 0.99965465}
+  m_LocalRotation: {x: 0.024854237, y: -0.0039720377, z: -0.611807, w: 0.7906066}
   m_LocalPosition: {x: -4.910342e-10, y: 0.3002126, z: 0.0000000071761836}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4248397792732541144}
   m_Father: {fileID: 5144358628773131869}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.9740001, y: -2.104, z: -75.505005}
+--- !u!114 &1024284945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153799601848684066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 10000
+    maxForce: 10000
+    distanceProportion: 4.7
+    maxDrag: 8.3
+    maxAngularDrag: 0.33
+    rotationStab: 1
+    rotationStabSpeed: 40
 --- !u!1 &8187663176697304358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,6 +1722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4248397792732541144}
+  - component: {fileID: 292412980}
   m_Layer: 0
   m_Name: mixamorig:LeftForeArm
   m_TagString: Untagged
@@ -1472,14 +1737,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8187663176697304358}
-  m_LocalRotation: {x: 0.00000026852862, y: -0.00011682692, z: 0.00000012935908, w: 1}
+  m_LocalRotation: {x: 0.00005494243, y: -0.00010306712, z: -0.4685329, w: 0.88344604}
   m_LocalPosition: {x: 4.9247537e-11, y: 0.6066476, z: 7.642972e-10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6978441650706725632}
   m_Father: {fileID: 2472118030396690691}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.013, z: -55.878002}
+--- !u!114 &292412980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8187663176697304358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 10000
+    maxForce: 10000
+    distanceProportion: 3.15
+    maxDrag: 8.3
+    maxAngularDrag: 0.33
+    rotationStab: 1
+    rotationStabSpeed: 40
 --- !u!1 &8377878558243506016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,6 +1777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4062972775460889695}
+  - component: {fileID: 433536602}
   m_Layer: 0
   m_Name: mixamorig:RightUpLeg
   m_TagString: Untagged
@@ -1511,6 +1800,29 @@ Transform:
   m_Father: {fileID: 1625872994500185406}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433536602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8377878558243506016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9d9bd369048f42af33b0c163bc0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedBody: {fileID: 0}
+  useLocalPositions: 1
+  settings:
+    positionStab: 1
+    attraction: 100000
+    maxForce: 100000
+    distanceProportion: 10
+    maxDrag: 19.2
+    maxAngularDrag: 1.08
+    rotationStab: 1
+    rotationStabSpeed: 15
 --- !u!1 &8488642937935681246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,14 +1846,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8488642937935681246}
-  m_LocalRotation: {x: 0.48574919, y: -0.51052755, z: 0.49659234, w: 0.5067597}
+  m_LocalRotation: {x: 0.6784449, y: -0.17777333, z: 0.6896659, w: 0.18019462}
   m_LocalPosition: {x: -0.14410573, y: 0.20264943, z: -0.004500925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2472118030396690691}
   m_Father: {fileID: 992942523534904015}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 150.678, y: -91.06598, z: -0.48199463}
 --- !u!1 &8565094043879203993
 GameObject:
   m_ObjectHideFlags: 0

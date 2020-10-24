@@ -15,7 +15,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!144 &1246187464
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -68,7 +68,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3091906372809411055}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 702f83d37fa27024bae0169499df86a9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -81,7 +81,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3091906373141697501}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 702f83d37fa27024bae0169499df86a9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -102,7 +102,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!144 &682822210
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -210,6 +210,11 @@ PrefabInstance:
       propertyPath: m_Swing2Limit.limit
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 3548484841105901979, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3548484841139122943, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
       propertyPath: m_Layer
@@ -219,6 +224,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548484841156373954, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3548484841224657741, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
@@ -260,6 +270,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3548484841514004897, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3548484841514004898, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
       propertyPath: m_LowTwistLimit.limit
@@ -290,6 +305,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3548484841672077639, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3548484841738436957, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
       propertyPath: m_Layer
@@ -299,6 +319,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548484841745163417, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3548484841745163418, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
@@ -355,6 +380,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3548484842050272129, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3548484842120811049, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
       propertyPath: m_Layer
@@ -404,6 +434,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Swing2Limit.limit
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548484842483914907, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3548484842498149440, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
@@ -490,6 +525,11 @@ PrefabInstance:
       propertyPath: m_Swing2Limit.limit
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 3548484842552965162, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3548484842552965167, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
       propertyPath: m_Layer
@@ -509,6 +549,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548484842589159942, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_Swing2Limit.limit
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548484842589159943, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3548484842593078147, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
@@ -560,6 +610,11 @@ PrefabInstance:
       propertyPath: m_Swing2Limit.limit
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 3548484842593078158, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3548484842611294718, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
       propertyPath: m_Layer
@@ -599,6 +654,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548484842883941613, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3548484842883941614, guid: 5a1d4cf2a32a6934fa58a8c543427d4e,
         type: 3}
