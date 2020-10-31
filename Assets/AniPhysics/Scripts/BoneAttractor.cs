@@ -18,8 +18,6 @@ namespace Recstazy.AniPhysics
         [SerializeField]
         private StabSettings settings;
 
-        private Vector3[] angularVelocities = new Vector3[3];
-
         private float startDrag = 0f;
         private float startAngularDrag = 0.05f;
 
@@ -93,30 +91,28 @@ namespace Recstazy.AniPhysics
                     {
                         CurrentBody.AddForce(force * Time.fixedDeltaTime, ForceMode.Force);
                     }
+
+                    CurrentBody.AddForce(-Physics.gravity * CurrentBody.mass * settings.GravityCompensation * Settings.Effector.Effect, ForceMode.Force);
                 }
 
                 if (Settings.RotationStab)
                 {
                     if (useLocalPositions)
                     {
-                        var startRotation = CurrentBody.rotation.eulerAngles;
                         alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
                         CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
 
                         Quaternion rotation = Quaternion.Inverse(CurrentBody.transform.localRotation) * Quaternion.RotateTowards(CurrentBody.transform.localRotation, transform.localRotation, 30f);
                         rotation = CurrentBody.rotation * rotation;
                         CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
-                        WriteAngularVelocity(CurrentBody.rotation.eulerAngles - startRotation);
                     }
                     else
                     {
-                        var startRotation = CurrentBody.rotation.eulerAngles;
                         alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
                         CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
 
                         Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, 30f);
                         CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
-                        WriteAngularVelocity(CurrentBody.rotation.eulerAngles - startRotation);
                     }
                 }
             }
@@ -151,11 +147,6 @@ namespace Recstazy.AniPhysics
                 CurrentBody.drag = startDrag;
                 CurrentBody.angularDrag = startAngularDrag;
 
-                if (Settings.RotationStab)
-                {
-                    CurrentBody.AddTorque(GetAngularvelocity(), ForceMode.VelocityChange);
-                }
-
                 ChangeDetectionModeOnSleep(CurrentBody, CollisionDetectionMode.Discrete);
                 CurrentBody = null;
             }
@@ -182,30 +173,6 @@ namespace Recstazy.AniPhysics
         {
             yield return new WaitUntil(() => body.IsSleeping());
             body.collisionDetectionMode = mode;
-        }
-
-        private void WriteAngularVelocity(Vector3 velocity)
-        {
-            for (int i = 1; i < angularVelocities.Length; i++)
-            {
-                angularVelocities[i - 1] = angularVelocities[i];
-            }
-
-            angularVelocities[angularVelocities.Length - 1] = velocity;
-        }
-
-        private Vector3 GetAngularvelocity()
-        {
-            Vector3 result = default;
-
-            foreach (var v in angularVelocities)
-            {
-                result += v;
-            }
-
-            result /= angularVelocities.Length;
-
-            return result;
         }
     }
 }

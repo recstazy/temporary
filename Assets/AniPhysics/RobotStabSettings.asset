@@ -21,3 +21,4 @@ MonoBehaviour:
     maxAngularDrag: 1.08
     rotationStab: 1
     rotationStabSpeed: 15
+    gravityCompensation: 1
