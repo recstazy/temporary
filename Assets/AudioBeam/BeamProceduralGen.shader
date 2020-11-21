@@ -1,4 +1,4 @@
-﻿Shader "WaveBeam/Procedural"
+﻿Shader "WaveBeam/ProceduralGen"
 {
 	Properties
     {
@@ -29,6 +29,7 @@
 
             CGPROGRAM
             #pragma vertex vert
+            #pragma geometry geom
             #pragma fragment frag alpha 
 
             // make fog work
@@ -95,6 +96,25 @@
                 o.color = v.color;
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
+            }
+
+            [maxvertexcount(6)]
+            void geom(uint primitiveID : SV_PrimitiveID, triangle v2f input[3], inout TriangleStream<v2f> triStream)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    v2f o;
+
+                    o.uv = input[i].uv;
+                    o.vertex = input[i].vertex;
+                    o.color = input[i].vertex;
+
+                    #if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
+                    o.fogCoord = input[i].fogCoord;
+                    #endif
+                    
+                    triStream.Append(o);
+                }
             }
 
             fixed4 frag (v2f i) : SV_Target

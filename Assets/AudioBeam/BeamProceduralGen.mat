@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BeamProcedural
+  m_Name: BeamProceduralGen
   m_Shader: {fileID: 4800000, guid: 234174cda9bc2134fa3000200959e880, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -46,4 +46,4 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 42.198895, g: 5.9119225, b: 5.9119225, a: 1}
+    - _MainColor: {r: 5.965287, g: 19.140455, b: 42.198887, a: 1}
