@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BeamProceduralGen
-  m_Shader: {fileID: 4800000, guid: 234174cda9bc2134fa3000200959e880, type: 3}
+  m_Name: BeamProceduralSine
+  m_Shader: {fileID: 4800000, guid: 27d6fa0e8a756bf4690a19e6656af61f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -33,20 +33,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Amplitude: 0.5
-    - _AmplitudeDelta: 0.2
+    - _AmplitudeDelta: 1
     - _CullMode: 0
-    - _DepthAmplitude: 0
-    - _Frequency: 20
+    - _Frequency: 30
     - _LineWidth: 0.05
-    - _ModulationStep: 10
-    - _Modulations: 2
-    - _Periods: 4
+    - _ModulationStep: 0
+    - _Modulations: 1
+    - _Periods: 5
     - _Randomize: 0
-    - _Subdivision: 10
     - _Tesselation: 24.3
-    - _Width: 0.1
-    - _XYPhase: 0
+    - _XYPhase: 0.303
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 19.39291, g: 17.14912, b: 29.508846, a: 1}
+    - _MainColor: {r: 42.198895, g: 5.9119225, b: 5.9119225, a: 1}
