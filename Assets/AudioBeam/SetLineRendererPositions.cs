@@ -11,12 +11,6 @@ public class SetLineRendererPositions : MonoBehaviour
 
     [SerializeField]
     private int pointsPerSegment;
-
-    [SerializeField]
-    private AnimationCurve curve = SineCurve();
-
-    private float[] curveValues = new float[1024];
-
     private Transform[] positions;
     private Vector3[] lastPositions;
 
@@ -93,41 +87,5 @@ public class SetLineRendererPositions : MonoBehaviour
         UnityEditor.EditorUtility.SetDirty(lineRenderer);
 
 #endif
-    }
-
-    public static AnimationCurve SineCurve()
-    {
-        var curve = new AnimationCurve();
-        var keys = new Keyframe[5];
-
-        keys[0] = new Keyframe(0f, 0f, 5f, 5f);
-        keys[1] = new Keyframe(0.25f, 1f, 0f, 0f);
-        keys[2] = new Keyframe(0.5f, 0f, -5f, -5f);
-        keys[3] = new Keyframe(0.75f, -1f, 0f, 0f);
-        keys[4] = new Keyframe(1f, 0f, 5f, 5f);
-        curve.keys = keys;
-
-        curve.preWrapMode = WrapMode.Loop;
-        curve.postWrapMode = WrapMode.Loop;
-
-        return curve;
-    }
-
-    private float Evaluate(float t, Keyframe keyframe0, Keyframe keyframe1)
-    {
-        float dt = keyframe1.time - keyframe0.time;
-
-        float m0 = keyframe0.outTangent * dt;
-        float m1 = keyframe1.inTangent * dt;
-
-        float t2 = t * t;
-        float t3 = t2 * t;
-
-        float a = 2 * t3 - 3 * t2 + 1;
-        float b = t3 - 2 * t2 + t;
-        float c = t3 - t2;
-        float d = -2 * t3 + 3 * t2;
-
-        return a * keyframe0.value + b * m0 + c * m1 + d * keyframe1.value;
     }
 }
