@@ -7,68 +7,156 @@ public class WaveBeamGen : MonoBehaviour
     #region Fields
 
     [SerializeField]
+    [HideInInspector]
     private Transform pointsParent;
 
+    [SerializeField]
+    [HideInInspector]
+    private GameObject rendererObject;
+
+    [SerializeField]
+    [HideInInspector]
     private MeshFilter filter;
+
+    [SerializeField]
+    [HideInInspector]
     private new MeshRenderer renderer;
+
     private Vector3[] vertices;
+    private Vector2[] uv;
     private int[] triangles;
 
-    private bool initilized = false;
+    private bool enoughPoints = false;
+    private int pointsCount = 0;
 
     #endregion
 
     #region Properties
-    
-    #endregion
 
-    private void Start()
-    {
-        if (pointsParent.childCount > 1)
-        {
-            filter = GetComponentInChildren<MeshFilter>();
-            renderer = GetComponentInChildren<MeshRenderer>();
-            filter.mesh = new Mesh();
-            filter.mesh.MarkDynamic();
-            vertices = new Vector3[(pointsParent.childCount - 1) * 2 + 1];
-            triangles = new int[(pointsParent.childCount - 1) * 3];
-            initilized = true;
-        }
-    }
+    public List<Transform> Pivots { get; set; } = new List<Transform>();
+
+    #endregion
 
     private void Update()
     {
-        if (initilized)
+        if (pointsParent == null)
         {
-            GenerateTriangles();
+            CreatePivots();
         }
+
+        if (rendererObject == null)
+        {
+            CreateRenederer();
+        }
+
+        if (pointsCount != pointsParent.childCount)
+        {
+            RegenerateAll();
+        }
+
+        if (enoughPoints)
+        {
+            UpdateVertices();
+        }
+    }
+
+    private void UpdateVertices()
+    {
+        Transform startPoint = pointsParent.GetChild(0);
+        Vector3 distanceToCamera = startPoint.InverseTransformPoint(Camera.main.transform.position) - startPoint.localPosition;
+        Vector3 directionToNext = pointsParent.GetChild(1).localPosition - startPoint.localPosition;
+
+        //Vector3 right = Vector3.Cross(distanceToCamera.normalized, directionToNext.normalized);
+        Vector3 right = transform.right;
+        //vertices[0] = pointsParent.GetChild(0).localPosition - right * 0.5f;
+
+        for (int i = 0; i < pointsCount - 1; i++)
+        {
+            int startI = i * 3;
+
+            startPoint = pointsParent.GetChild(i);
+            Vector3 startPosition = startPoint.localPosition;
+
+            directionToNext = pointsParent.GetChild(i + 1).localPosition - startPosition;
+            distanceToCamera = startPoint.InverseTransformPoint(Camera.main.transform.position) - startPoint.localPosition;
+
+            //right = Vector3.Cross(distanceToCamera.normalized, directionToNext.normalized);
+            right = transform.right;
+            vertices[startI] = startPosition - right;
+            vertices[startI + 1] = startPosition + right;
+            vertices[startI + 2] = startPosition + directionToNext;
+        }
+
+        filter.sharedMesh.vertices = vertices;
     }
 
     private void GenerateTriangles()
     {
-        Vector3 directionToNext;
-        Vector3 right = Camera.main.transform.right;
-        vertices[0] = pointsParent.GetChild(0).localPosition - right * 0.5f;
-
-        for (int i = 0; i < pointsParent.childCount - 1; i++)
+        for (int i = 0; i < triangles.Length; i++)
         {
-            int startI = i * 2;
-            directionToNext = pointsParent.GetChild(i + 1).localPosition - pointsParent.GetChild(i).localPosition;
-            vertices[startI + 1] = vertices[startI] + right;
-            vertices[startI + 2] = vertices[startI] + directionToNext;
+            triangles[i] = i;
         }
 
-        for (int i = 0, j = 0; i < triangles.Length; i += 3, j++)
-        {
-            triangles[i] = j * 2;
-            triangles[i + 1] = j * 2 + 1;
-            triangles[i + 2] = j * 2 + 2;
-        }
+        filter.sharedMesh.triangles = triangles;
+    }
 
-        filter.mesh.Clear();
-        filter.mesh.vertices = vertices;
-        filter.mesh.triangles = triangles;
-        filter.mesh.RecalculateNormals();
-        filter.mesh.RecalculateBounds();
+    private void RegenerateAll()
+    {
+        pointsCount = pointsParent.childCount;
+        enoughPoints = pointsCount > 1;
+        filter.sharedMesh.Clear();
+
+        if (enoughPoints)
+        {
+            vertices = new Vector3[(pointsCount - 1) * 3];
+            triangles = new int[(pointsCount - 1) * 3];
+            uv = new Vector2[vertices.Length];
+
+            UpdateVertices();
+            GenerateTriangles();
+        }
+        else
+        {
+            vertices = null;
+            triangles = null;
+            uv = null;
+        }
+    }
+
+    private void CreateRenederer()
+    {
+        rendererObject = new GameObject("WaveBeamRenderer");
+        rendererObject.transform.SetParent(transform);
+        rendererObject.transform.localPosition = Vector3.zero;
+        rendererObject.transform.localRotation = Quaternion.identity;
+
+        filter = rendererObject.AddComponent<MeshFilter>();
+        renderer = rendererObject.AddComponent<MeshRenderer>();
+        renderer.sharedMaterial = Resources.Load<Material>("BeamProceduralGen");
+        filter.sharedMesh = new Mesh();
+        filter.sharedMesh.bounds = new Bounds(Vector3.zero, Vector3.one);
+        filter.sharedMesh.name = "WaveBeamGenerated";
+        filter.sharedMesh.MarkDynamic();
+    }
+
+    private void CreatePivots()
+    {
+        var pointsParentObject = new GameObject("PointsParent");
+        pointsParent = pointsParentObject.transform;
+        pointsParent.SetParent(transform);
+        pointsParent.localPosition = Vector3.zero;
+        pointsParent.localRotation = Quaternion.identity;
+
+        var pointA = new GameObject("PointA");
+        pointA.transform.SetParent(pointsParent);
+        pointA.transform.localPosition = Vector3.zero;
+        pointA.transform.localRotation = Quaternion.identity;
+        Pivots.Add(pointA.transform);
+
+        var pointB = new GameObject("PointB");
+        pointB.transform.SetParent(pointsParent);
+        pointB.transform.localPosition = Vector3.up;
+        pointB.transform.localRotation = Quaternion.identity;
+        Pivots.Add(pointB.transform);
     }
 }

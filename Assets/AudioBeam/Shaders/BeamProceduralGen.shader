@@ -95,7 +95,7 @@
                 return o;
             }
             
-            #define SUBDIVISION 48
+            #define SUBDIVISION 64
 
             [maxvertexcount(SUBDIVISION * 2)]
             void geom(uint primitiveID : SV_PrimitiveID, triangle v2f input[3], inout TriangleStream<v2f> triStream)
@@ -108,7 +108,7 @@
                 #endif
 
                 float4 bottomCenter = lerp(input[0].vertex, input[1].vertex, 0.5);
-                float4 up = input[2].vertex - input[0].vertex;
+                float4 up = input[2].vertex - bottomCenter;
                 float4 right = normalize(input[1].vertex - bottomCenter);
                 float4 fwd = float4(cross(normalize(up), right), 0);
                 float fraction = float(1) / (_Subdivision - 1);

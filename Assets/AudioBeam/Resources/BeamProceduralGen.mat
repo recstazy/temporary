@@ -44,7 +44,7 @@ Material:
     - _Randomize: 0
     - _Subdivision: 10
     - _Tesselation: 24.3
-    - _Width: 0.1
+    - _Width: 0.03
     - _XYPhase: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
