@@ -43,13 +43,21 @@
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float2 uv1 : TEXCOORD1;
             };
 
-            struct v2f
+            struct v2g
             {
+                float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
+                float2 uv1 : TEXCOORD1;
+            };
+
+            struct g2f
+            {
                 float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                UNITY_FOG_COORDS(2)
             };
 
             float4 _MainColor;
@@ -85,18 +93,19 @@
                 return function * weight;
             }
 
-            v2f vert (appdata v)
+            v2g vert (appdata v)
             {
-                v2f o;
+                v2g o;
                 o.vertex = v.vertex;
                 o.uv = v.uv;
+                o.uv1 = v.uv1;
                 
                 return o;
             }
             
             #define SUBDIVISION 64
 
-            v2f TransferOutput(v2f o)
+            g2f TransferOutput(g2f o)
             {
                 o.vertex = UnityObjectToClipPos(o.vertex);
                 UNITY_TRANSFER_FOG(o,o.vertex);
@@ -104,10 +113,10 @@
             }
 
             [maxvertexcount(SUBDIVISION * 2)]
-            void geom(uint primitiveID : SV_PrimitiveID, triangle v2f input[3], inout TriangleStream<v2f> triStream)
+            void geom(uint primitiveID : SV_PrimitiveID, triangle v2g input[3], inout TriangleStream<g2f> triStream)
             {
                 _Subdivision = SUBDIVISION;
-                v2f output;
+                g2f output;
 
                 #if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
                     output.fogCoord = input[0].fogCoord;
@@ -115,20 +124,20 @@
 
                 float4 bottomCenter = lerp(input[0].vertex, input[1].vertex, 0.5);
                 float4 up = input[2].vertex - bottomCenter;
-
                 float4 right = mul(float4(1, 0, 0, 0), UNITY_MATRIX_V);
                 float4 fwd = float4(cross(normalize(up), right), 0);
                 float fraction = float(1) / (_Subdivision - 1);
                 
                 for (int i = 0; i <= _Subdivision; i++)
                 {
-                    float uvX = lerp(input[0].uv.x, input[2].uv.x, fraction * i);
-                    float4 currentPoint = bottomCenter + up * uvX;
-                    float4 offset = (float4(1, 0, 0, 0) * EvaluateFunction(uvX, 0) + float4(0, 0, 1, 0) * EvaluateFunction(uvX, _XYPhase) * _DepthAmplitude) * _Amplitude;
+                    float uv1X = lerp(input[0].uv1.x, input[2].uv1.x, fraction * i);
+                    float4 currentPoint = bottomCenter + up * fraction * i;
+                    float4 offset = (float4(1, 0, 0, 0) * EvaluateFunction(uv1X, 0) + float4(0, 0, 1, 0) * EvaluateFunction(uv1X, _XYPhase) * _DepthAmplitude) * _Amplitude;
 
                     currentPoint += offset;
 
                     output.vertex = currentPoint - right * _Width;
+                    float uvX = lerp(input[0].uv.x, input[2].uv.x, fraction * i);
                     output.uv = float2(uvX, 0);
                     output = TransferOutput(output);
                     triStream.Append(output);
@@ -140,7 +149,7 @@
                 }
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag (g2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _MainColor;
                 UNITY_APPLY_FOG(i.fogCoord, col);

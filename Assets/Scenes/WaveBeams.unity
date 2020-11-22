@@ -1760,10 +1760,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14739da5142f91c4d9c8c37c37363381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsParent: {fileID: 0}
-  rendererObject: {fileID: 0}
-  filter: {fileID: 0}
-  renderer: {fileID: 0}
+  uvMode: 1
+  pointsMode: 0
 --- !u!4 &1080402425
 Transform:
   m_ObjectHideFlags: 0

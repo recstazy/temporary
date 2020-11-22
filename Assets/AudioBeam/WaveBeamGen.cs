@@ -4,51 +4,52 @@ using UnityEngine;
 
 public class WaveBeamGen : MonoBehaviour
 {
+    public enum UVMode { PerSegment, WholeBeam }
+    public enum PointsMode { Node, Direction }
+
     #region Fields
 
     [SerializeField]
-    [HideInInspector]
+    private UVMode uvMode;
+
+    [SerializeField]
+    private PointsMode pointsMode;
+
     private Transform pointsParent;
-
-    [SerializeField]
-    [HideInInspector]
     private GameObject rendererObject;
-
-    [SerializeField]
-    [HideInInspector]
     private MeshFilter filter;
-
-    [SerializeField]
-    [HideInInspector]
     private new MeshRenderer renderer;
 
     private Vector3[] vertices;
     private Vector2[] uv;
     private int[] triangles;
 
+    // Used to provide node information to shader
+    private Vector2[] uv1;
+    
     private bool enoughPoints = false;
     private int pointsCount = 0;
+    private UVMode currentUVMode;
+    private PointsMode currentPointsMode;
 
     #endregion
 
     #region Properties
 
     public List<Transform> Pivots { get; set; } = new List<Transform>();
+    public UVMode CurrentUVMode { get => uvMode; set => uvMode = value; }
+    public PointsMode CurrentPointsMode { get => pointsMode; set => pointsMode = value; }
 
     #endregion
 
+    private void Awake()
+    {
+        CreatePivots();
+        CreateRenederer();
+    }
+
     private void Update()
     {
-        if (pointsParent == null)
-        {
-            CreatePivots();
-        }
-
-        if (rendererObject == null)
-        {
-            CreateRenederer();
-        }
-
         if (pointsCount != pointsParent.childCount)
         {
             RegenerateAll();
@@ -56,11 +57,25 @@ public class WaveBeamGen : MonoBehaviour
 
         if (enoughPoints)
         {
-            UpdateVertices(false);
+            bool uvModeChanged = uvMode != currentUVMode;
+
+            if (uvModeChanged)
+            {
+                currentUVMode = uvMode;
+            }
+
+            bool pointsModeChanged = currentPointsMode != pointsMode;
+
+            if (pointsModeChanged)
+            {
+                currentPointsMode = pointsMode;
+            }
+
+            UpdateVertices(uvModeChanged, pointsModeChanged);
         }
     }
 
-    private void UpdateVertices(bool updateUV)
+    private void UpdateVertices(bool updateUV, bool updateUV1)
     {
         Transform startPoint;
         Vector3 directionToNext;
@@ -80,9 +95,26 @@ public class WaveBeamGen : MonoBehaviour
 
             if (updateUV)
             {
-                uv[startI] = Vector2.zero;
-                uv[startI + 1] = Vector2.up;
-                uv[startI + 2] = new Vector2(1f, 0.5f);
+                if (uvMode == UVMode.PerSegment)
+                {
+                    FillUV(ref uv, i, startI, true);
+                }
+                else
+                {
+                    FillUV(ref uv, i, startI, true);
+                }
+            }
+
+            if (updateUV1)
+            {
+                if (pointsMode == PointsMode.Node)
+                {
+                    FillUV(ref uv1, i, startI, true);
+                }
+                else
+                {
+                    FillUV(ref uv1, i, startI, false);
+                }
             }
         }
 
@@ -91,6 +123,11 @@ public class WaveBeamGen : MonoBehaviour
         if (updateUV)
         {
             filter.sharedMesh.uv = uv;
+        }
+
+        if (updateUV1)
+        {
+            filter.sharedMesh.uv2 = uv1;
         }
     }
 
@@ -115,8 +152,9 @@ public class WaveBeamGen : MonoBehaviour
             vertices = new Vector3[(pointsCount - 1) * 3];
             triangles = new int[(pointsCount - 1) * 3];
             uv = new Vector2[vertices.Length];
+            uv1 = new Vector2[vertices.Length];
 
-            UpdateVertices(true);
+            UpdateVertices(true, true);
             GenerateTriangles();
         }
         else
@@ -124,6 +162,7 @@ public class WaveBeamGen : MonoBehaviour
             vertices = null;
             triangles = null;
             uv = null;
+            uv1 = null;
         }
     }
 
@@ -162,5 +201,21 @@ public class WaveBeamGen : MonoBehaviour
         pointB.transform.localPosition = Vector3.up;
         pointB.transform.localRotation = Quaternion.identity;
         Pivots.Add(pointB.transform);
+    }
+
+    private void FillUV(ref Vector2[] uv, int i, int startI, bool perSegment)
+    {
+        if (perSegment)
+        {
+            uv[startI] = Vector2.zero;
+            uv[startI + 1] = Vector2.up;
+            uv[startI + 2] = new Vector2(1f, 0.5f);
+        }
+        else
+        {
+            uv[startI] = new Vector2((float)i / (pointsCount - 1), 0f);
+            uv[startI + 1] = new Vector2((float)i / (pointsCount - 1), 1f);
+            uv[startI + 2] = new Vector2((float)(i + 1) / (pointsCount - 1), 1f);
+        }
     }
 }
