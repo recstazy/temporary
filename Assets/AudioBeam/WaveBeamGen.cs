@@ -75,6 +75,7 @@ public class WaveBeamGen : MonoBehaviour
 
             UpdateVertices();
             UpdateUV(uvModeChanged, pointsModeChanged);
+            filter.sharedMesh.RecalculateBounds();
         }
     }
 
@@ -160,7 +161,7 @@ public class WaveBeamGen : MonoBehaviour
             triangles = new int[(pointsCount - 1) * 3];
             uv = new Vector2[vertices.Length];
             uv1 = new Vector2[vertices.Length];
-
+           
             UpdateVertices();
             UpdateUV(true, true);
             GenerateTriangles();
@@ -185,7 +186,6 @@ public class WaveBeamGen : MonoBehaviour
         renderer = rendererObject.AddComponent<MeshRenderer>();
         renderer.sharedMaterial = Resources.Load<Material>("BeamProceduralGen");
         filter.sharedMesh = new Mesh();
-        filter.sharedMesh.bounds = new Bounds(Vector3.zero, Vector3.one);
         filter.sharedMesh.name = "WaveBeamGenerated";
         filter.sharedMesh.MarkDynamic();
     }
