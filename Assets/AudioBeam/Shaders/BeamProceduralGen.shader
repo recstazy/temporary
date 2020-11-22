@@ -88,14 +88,24 @@
             v2f vert (appdata v)
             {
                 v2f o;
-                
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.vertex = v.vertex;
                 o.uv = v.uv;
-                UNITY_TRANSFER_FOG(o,o.vertex);
+                
+                #if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
+                    o.fogCoord = v.fogCoord;
+                #endif
+
                 return o;
             }
             
             #define SUBDIVISION 64
+
+            v2f TransferOutput(v2f o)
+            {
+                o.vertex = UnityObjectToClipPos(o.vertex);
+                UNITY_TRANSFER_FOG(o,o.vertex);
+                return o;
+            }
 
             [maxvertexcount(SUBDIVISION * 2)]
             void geom(uint primitiveID : SV_PrimitiveID, triangle v2f input[3], inout TriangleStream<v2f> triStream)
@@ -117,16 +127,18 @@
                 {
                     float uvX = fraction * i;
                     float4 currentPoint = bottomCenter + up * uvX;
-                    float4 offset = (right * EvaluateFunction(uvX, 0) + normalize(fwd) * EvaluateFunction(uvX, _XYPhase) * _DepthAmplitude) * _Amplitude;
+                    float4 offset = (float4(1, 0, 0, 0) * EvaluateFunction(uvX, 0) + float4(0, 0, 1, 0) * EvaluateFunction(uvX, _XYPhase) * _DepthAmplitude) * _Amplitude;
 
                     currentPoint += offset;
 
                     output.vertex = currentPoint - right * _Width;
                     output.uv = float2(uvX, 0);
+                    output = TransferOutput(output);
                     triStream.Append(output);
 
                     output.vertex = currentPoint + right * _Width;
                     output.uv.y = 1;
+                    output = TransferOutput(output);
                     triStream.Append(output);
                 }
             }

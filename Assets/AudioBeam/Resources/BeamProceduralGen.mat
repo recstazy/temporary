@@ -45,7 +45,7 @@ Material:
     - _Subdivision: 10
     - _Tesselation: 24.3
     - _Width: 0.03
-    - _XYPhase: 0
+    - _XYPhase: 0.32
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
