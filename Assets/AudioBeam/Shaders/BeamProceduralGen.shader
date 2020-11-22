@@ -126,13 +126,16 @@
                 float4 up = input[2].vertex - bottomCenter;
                 float4 right = mul(float4(1, 0, 0, 0), UNITY_MATRIX_V);
                 float4 fwd = float4(cross(normalize(up), right), 0);
+
+                float4 triangleRight = normalize(input[1].vertex - bottomCenter);
+                float4 triangleFwd = float4(cross(normalize(up), triangleRight), 1);
                 float fraction = float(1) / (_Subdivision - 1);
                 
                 for (int i = 0; i <= _Subdivision; i++)
                 {
                     float uv1X = lerp(input[0].uv1.x, input[2].uv1.x, fraction * i);
                     float4 currentPoint = bottomCenter + up * fraction * i;
-                    float4 offset = (float4(1, 0, 0, 0) * EvaluateFunction(uv1X, 0) + float4(0, 0, 1, 0) * EvaluateFunction(uv1X, _XYPhase) * _DepthAmplitude) * _Amplitude;
+                    float4 offset = (triangleRight * EvaluateFunction(uv1X, 0) + triangleFwd * EvaluateFunction(uv1X, _XYPhase) * _DepthAmplitude) * _Amplitude;
 
                     currentPoint += offset;
 

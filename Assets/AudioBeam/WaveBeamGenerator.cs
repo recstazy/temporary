@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WaveBeamGen : MonoBehaviour
+/// <summary>
+/// GPU driven beam generator
+/// </summary>
+public class WaveBeamGenerator : MonoBehaviour
 {
-    public enum UVMode { PerSegment, WholeBeam }
-    public enum PointsMode { Node, Direction }
+    public enum UVMode 
+    {
+        /// <summary>
+        /// Repeat uv per segment
+        /// </summary>
+        PerSegment,
+
+        /// <summary>
+        /// Stretch uv along whole beam
+        /// </summary>
+        Stretch
+    }
 
     #region Fields
 
     [SerializeField]
+    [Tooltip("Repeat uv per segment or stretch along whole beam")]
     private UVMode uvMode;
 
     [SerializeField]
-    private PointsMode pointsMode;
+    [Tooltip("Enabling mades beam to not rotate axes between points but it will become flat when alignet to local XZ plane")]
+    private bool avoidRotation;
 
     [SerializeField]
     private List<Transform> points;
@@ -29,19 +44,27 @@ public class WaveBeamGen : MonoBehaviour
 
     // Used to provide node information to shader
     private Vector2[] uv1;
-    
+
     private bool enoughPoints = false;
     private int pointsCount = 0;
     private UVMode currentUVMode;
-    private PointsMode currentPointsMode;
 
     #endregion
 
     #region Properties
 
+    /// <summary>
+    /// Add or remove points between which beam is rendered
+    /// </summary>
     public List<Transform> Points => points;
+
+    /// <summary>
+    /// Set uv wrapping mode
+    /// </summary>
     public UVMode CurrentUVMode { get => uvMode; set => uvMode = value; }
-    public PointsMode CurrentPointsMode { get => pointsMode; set => pointsMode = value; }
+
+    public MeshRenderer BeamRenderer => renderer;
+    public MeshFilter BeamMeshFilter => filter;
 
     #endregion
 
@@ -66,15 +89,8 @@ public class WaveBeamGen : MonoBehaviour
                 currentUVMode = uvMode;
             }
 
-            bool pointsModeChanged = currentPointsMode != pointsMode;
-
-            if (pointsModeChanged)
-            {
-                currentPointsMode = pointsMode;
-            }
-
             UpdateVertices();
-            UpdateUV(uvModeChanged, pointsModeChanged);
+            UpdateUV(uvModeChanged, false);
             filter.sharedMesh.RecalculateBounds();
         }
     }
@@ -121,8 +137,14 @@ public class WaveBeamGen : MonoBehaviour
             }
 
             Vector3 startPosition = startPoint.localPosition;
-
             directionToNext = next.localPosition - startPosition;
+
+            if (!avoidRotation)
+            {
+                float dot = Mathf.Abs(Vector3.Dot(directionToNext.normalized, transform.up));
+                Vector3 upFwdBlended = Vector3.Lerp(transform.up, transform.forward, dot);
+                right = Vector3.Lerp(upFwdBlended, right, dot).normalized * 0.1f;
+            }
 
             vertices[startI] = startPosition - right;
             vertices[startI + 1] = startPosition + right;
@@ -161,7 +183,7 @@ public class WaveBeamGen : MonoBehaviour
             triangles = new int[(pointsCount - 1) * 3];
             uv = new Vector2[vertices.Length];
             uv1 = new Vector2[vertices.Length];
-           
+
             UpdateVertices();
             UpdateUV(true, true);
             GenerateTriangles();
@@ -204,20 +226,13 @@ public class WaveBeamGen : MonoBehaviour
                 }
                 else
                 {
-                    FillUV(ref uv, i, startI, true);
+                    FillUV(ref uv, i, startI, false);
                 }
             }
 
             if (updateUV1)
             {
-                if (pointsMode == PointsMode.Node)
-                {
-                    FillUV(ref uv1, i, startI, true);
-                }
-                else
-                {
-                    FillUV(ref uv1, i, startI, false);
-                }
+                FillUV(ref uv1, i, startI, true);
             }
         }
 
