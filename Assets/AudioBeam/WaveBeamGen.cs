@@ -47,7 +47,6 @@ public class WaveBeamGen : MonoBehaviour
 
     private void Awake()
     {
-        //CreatePivots();
         CreateRenederer();
     }
 
@@ -189,27 +188,6 @@ public class WaveBeamGen : MonoBehaviour
         filter.sharedMesh.bounds = new Bounds(Vector3.zero, Vector3.one);
         filter.sharedMesh.name = "WaveBeamGenerated";
         filter.sharedMesh.MarkDynamic();
-    }
-
-    private void CreatePivots()
-    {
-        var pointsParentObject = new GameObject("PointsParent");
-        var pointsParent = pointsParentObject.transform;
-        pointsParent.SetParent(transform);
-        pointsParent.localPosition = Vector3.zero;
-        pointsParent.localRotation = Quaternion.identity;
-
-        var pointA = new GameObject("PointA");
-        pointA.transform.SetParent(pointsParent);
-        pointA.transform.localPosition = Vector3.zero;
-        pointA.transform.localRotation = Quaternion.identity;
-        Points.Add(pointA.transform);
-
-        var pointB = new GameObject("PointB");
-        pointB.transform.SetParent(pointsParent);
-        pointB.transform.localPosition = Vector3.up;
-        pointB.transform.localRotation = Quaternion.identity;
-        Points.Add(pointB.transform);
     }
 
     private void UpdateUV(bool updateUV, bool updateUV1)
