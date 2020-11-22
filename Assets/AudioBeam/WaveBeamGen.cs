@@ -56,19 +56,14 @@ public class WaveBeamGen : MonoBehaviour
 
         if (enoughPoints)
         {
-            UpdateVertices();
+            UpdateVertices(false);
         }
     }
 
-    private void UpdateVertices()
+    private void UpdateVertices(bool updateUV)
     {
-        Transform startPoint = pointsParent.GetChild(0);
-        Vector3 distanceToCamera = startPoint.InverseTransformPoint(Camera.main.transform.position) - startPoint.localPosition;
-        Vector3 directionToNext = pointsParent.GetChild(1).localPosition - startPoint.localPosition;
-
-        //Vector3 right = Vector3.Cross(distanceToCamera.normalized, directionToNext.normalized);
-        Vector3 right = transform.right;
-        //vertices[0] = pointsParent.GetChild(0).localPosition - right * 0.5f;
+        Transform startPoint;
+        Vector3 directionToNext;
 
         for (int i = 0; i < pointsCount - 1; i++)
         {
@@ -78,16 +73,25 @@ public class WaveBeamGen : MonoBehaviour
             Vector3 startPosition = startPoint.localPosition;
 
             directionToNext = pointsParent.GetChild(i + 1).localPosition - startPosition;
-            distanceToCamera = startPoint.InverseTransformPoint(Camera.main.transform.position) - startPoint.localPosition;
 
-            //right = Vector3.Cross(distanceToCamera.normalized, directionToNext.normalized);
-            right = transform.right;
-            vertices[startI] = startPosition - right;
-            vertices[startI + 1] = startPosition + right;
+            vertices[startI] = startPosition - transform.right;
+            vertices[startI + 1] = startPosition + transform.right;
             vertices[startI + 2] = startPosition + directionToNext;
+
+            if (updateUV)
+            {
+                uv[startI] = Vector2.zero;
+                uv[startI + 1] = Vector2.up;
+                uv[startI + 2] = new Vector2(1f, 0.5f);
+            }
         }
 
         filter.sharedMesh.vertices = vertices;
+
+        if (updateUV)
+        {
+            filter.sharedMesh.uv = uv;
+        }
     }
 
     private void GenerateTriangles()
@@ -112,7 +116,7 @@ public class WaveBeamGen : MonoBehaviour
             triangles = new int[(pointsCount - 1) * 3];
             uv = new Vector2[vertices.Length];
 
-            UpdateVertices();
+            UpdateVertices(true);
             GenerateTriangles();
         }
         else

@@ -91,10 +91,6 @@
                 o.vertex = v.vertex;
                 o.uv = v.uv;
                 
-                #if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
-                    o.fogCoord = v.fogCoord;
-                #endif
-
                 return o;
             }
             
@@ -119,13 +115,14 @@
 
                 float4 bottomCenter = lerp(input[0].vertex, input[1].vertex, 0.5);
                 float4 up = input[2].vertex - bottomCenter;
-                float4 right = normalize(input[1].vertex - bottomCenter);
+
+                float4 right = mul(float4(1, 0, 0, 0), UNITY_MATRIX_V);
                 float4 fwd = float4(cross(normalize(up), right), 0);
                 float fraction = float(1) / (_Subdivision - 1);
                 
                 for (int i = 0; i <= _Subdivision; i++)
                 {
-                    float uvX = fraction * i;
+                    float uvX = lerp(input[0].uv.x, input[2].uv.x, fraction * i);
                     float4 currentPoint = bottomCenter + up * uvX;
                     float4 offset = (float4(1, 0, 0, 0) * EvaluateFunction(uvX, 0) + float4(0, 0, 1, 0) * EvaluateFunction(uvX, _XYPhase) * _DepthAmplitude) * _Amplitude;
 
