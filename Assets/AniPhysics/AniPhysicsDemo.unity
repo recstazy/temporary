@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 214463444}
   - component: {fileID: 214463441}
   - component: {fileID: 214463443}
+  - component: {fileID: 214463445}
   m_Layer: 0
   m_Name: PhysicsBlendedAnimation
   m_TagString: Untagged
@@ -301,7 +302,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214463440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -347,7 +348,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceHips: {fileID: 4791942291402252760}
   targetHips: {fileID: 3091906372651565693}
+  settings: {fileID: 214463445}
 --- !u!114 &214463444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214463440}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f1eb0a8a17b1e4f8b4c96b843798a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1872357448}
+  navAgent: {fileID: 214463441}
+--- !u!114 &214463445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,11 +372,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 214463440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7f1eb0a8a17b1e4f8b4c96b843798a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 22cea0cd85a524948abc17bb86882171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1872357448}
-  navAgent: {fileID: 214463441}
+  positionAlignSpeed: 10
+  rotationAlignSpeed: 10
+  maxPositionAlignSpeed: 1
+  maxRotationAlignSpeed: 500
 --- !u!1 &384716858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1398048895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3297,8 +3315,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.44409868, y: 0.2, z: 0.3}
-  m_Center: {x: 0, y: -0.12, z: -0.020458624}
+  m_Size: {x: 0.44409868, y: 0.16133001, z: 0.3}
+  m_Center: {x: 0.0000000027422917, y: -0.100665, z: -0.020458624}
 --- !u!54 &3091906372651565683
 Rigidbody:
   m_ObjectHideFlags: 0

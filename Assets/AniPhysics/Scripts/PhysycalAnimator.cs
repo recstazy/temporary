@@ -12,12 +12,17 @@ public class PhysycalAnimator : MonoBehaviour
     [SerializeField]
     private Transform targetHips;
 
+    [SerializeField]
+    private BoneAnimationSettings settings;
+
     private BoneAnimator[] animators;
 
     #endregion
 
     #region Properties
-    
+
+    public BoneAnimationSettings Settings { get => settings; set => settings = value; }
+
     #endregion
 
     private void Start()
@@ -35,6 +40,7 @@ public class PhysycalAnimator : MonoBehaviour
         for (int i = 0; i < references.Length; i++)
         {
             animators[i] = targets[i].gameObject.AddComponent<BoneAnimator>();
+            animators[i].Settings = Settings;
             animators[i].SetReference(references[i]);
         }
 
