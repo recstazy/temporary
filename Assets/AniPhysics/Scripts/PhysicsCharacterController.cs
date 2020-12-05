@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +15,9 @@ namespace Recstazy.AniPhysics
 
         [SerializeField]
         private NavMeshAgent navAgent;
+
+        [SerializeField]
+        private Rigidbody body;
 
         #endregion
 
@@ -33,8 +37,8 @@ namespace Recstazy.AniPhysics
 
         private void FixedUpdate()
         {
-            var forwardDot = Vector3.Dot(transform.forward, navAgent.velocity.normalized);
-            var rightDot = Vector3.Dot(transform.right, navAgent.velocity.normalized);
+            var forwardDot = Mathf.Clamp(Vector3.Dot(transform.forward, body.velocity), -1f, 1f);
+            var rightDot = Mathf.Clamp(Vector3.Dot(transform.right, body.velocity), -1f, 1f);
 
             animator.SetFloat("DirectionX", rightDot);
             animator.SetFloat("DirectionZ", forwardDot);

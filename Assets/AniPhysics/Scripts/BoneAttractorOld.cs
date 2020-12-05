@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Recstazy.AniPhysics
 {
-    public class BoneAttractor : MonoBehaviour
+    public class BoneAttractorOld : MonoBehaviour
     {
         #region Fields
 
@@ -51,33 +51,69 @@ namespace Recstazy.AniPhysics
 
             if (IsGrabbing)
             {
-                Vector3 distanceVector;
-
-                distanceVector = transform.position - CurrentBody.position;
-                var distanceSquared = distanceVector.sqrMagnitude;
-                distanceSquared *= Settings.DistanceProportion;
-
-                var alpha = distanceSquared / 100f;
-                float targetDrag = Mathf.Lerp(Settings.MaxDrag, startDrag, alpha);
-                float targetAngularDrag = Mathf.Lerp(Settings.MaxAngularDrag, startAngularDrag, alpha);
-                CurrentBody.drag = targetDrag;
-                CurrentBody.angularDrag = targetAngularDrag;
+                float alpha = 0f;
 
                 if (Settings.PositionStab)
                 {
+                    Vector3 distanceVector;
+
+                    if (useLocalPositions)
+                    {
+                        distanceVector = transform.localPosition - CurrentBody.transform.localPosition;
+                    }
+                    else
+                    {
+                        distanceVector = transform.position - CurrentBody.position;
+                    }
+
+                    var distanceSquared = distanceVector.sqrMagnitude;
+                    distanceSquared *= Settings.DistanceProportion;
+
+                    alpha = distanceSquared / 100f;
+
+                    float targetDrag = Mathf.Lerp(Settings.MaxDrag, startDrag, alpha);
+                    float targetAngularDrag = Mathf.Lerp(Settings.MaxAngularDrag, startAngularDrag, alpha);
+
+                    CurrentBody.drag = targetDrag;
+                    CurrentBody.angularDrag = targetAngularDrag;
                     var force = distanceVector.normalized * Settings.Attraction * distanceSquared;
-                    force = force.normalized * Mathf.Clamp(force.magnitude, -Settings.MaxForce, Settings.MaxForce);
-                    CurrentBody.AddForce(force * Time.fixedDeltaTime, ForceMode.Force);
+
+                    if (force.magnitude > Settings.MaxForce)
+                    {
+                        force = force.normalized * Settings.MaxForce;
+                    }
+
+                    if (useLocalPositions)
+                    {
+                        CurrentBody.AddRelativeForce(force * Time.fixedDeltaTime, ForceMode.Force);
+                    }
+                    else
+                    {
+                        CurrentBody.AddForce(force * Time.fixedDeltaTime, ForceMode.Force);
+                    }
+
                     CurrentBody.AddForce(-Physics.gravity * CurrentBody.mass * settings.GravityCompensation * Settings.Effector.Effect, ForceMode.Force);
                 }
 
                 if (Settings.RotationStab)
                 {
-                    alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
-                    CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
-                    Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, 30f);
-                    //CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
-                    CurrentBody.MoveRotation(transform.rotation);
+                    if (useLocalPositions)
+                    {
+                        alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
+                        CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
+
+                        Quaternion rotation = Quaternion.Inverse(CurrentBody.transform.localRotation) * Quaternion.RotateTowards(CurrentBody.transform.localRotation, transform.localRotation, 30f);
+                        rotation = CurrentBody.rotation * rotation;
+                        CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
+                    }
+                    else
+                    {
+                        alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
+                        CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
+
+                        Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, 30f);
+                        CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
+                    }
                 }
             }
         }
