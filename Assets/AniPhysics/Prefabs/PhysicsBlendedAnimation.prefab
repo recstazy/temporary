@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7588107375425541031}
   - component: {fileID: 386037639777245362}
   m_Layer: 0
-  m_Name: PhysicsBlendedAnimation 1
+  m_Name: PhysicsBlendedAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8198763715246904014}
-  navAgent: {fileID: 7588107375425541031}
+  body: {fileID: 0}
 --- !u!114 &7733172486237598639
 MonoBehaviour:
   m_ObjectHideFlags: 0

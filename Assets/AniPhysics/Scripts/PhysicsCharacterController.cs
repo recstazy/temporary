@@ -14,9 +14,6 @@ namespace Recstazy.AniPhysics
         private Animator animator;
 
         [SerializeField]
-        private NavMeshAgent navAgent;
-
-        [SerializeField]
         private Rigidbody body;
 
         #endregion
@@ -28,11 +25,6 @@ namespace Recstazy.AniPhysics
         public void StandingChanged(bool isStanding)
         {
             animator.SetBool("Standing", isStanding);
-
-            if (isStanding)
-            {
-                navAgent.SetDestination(transform.position);
-            }
         }
 
         private void FixedUpdate()
