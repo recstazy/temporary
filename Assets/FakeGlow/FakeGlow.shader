@@ -3,13 +3,13 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        [HDR]_Color("Color", Color) = (1, 1, 1, 1)
+        [HDR]_Color("Color", Color) = (4.64, 2, 12, 1)
         _Bias("Bias", float) = 0.5
         _Scale("Scale", float) = 1
         _Power("Power", float) = 0.85
-        _AlphaTreshold("AlphaTreshold", float) = 1.7
-        _Fade("Fade", float) = 0.7
-        _HDRFade("HDRFade", float) = 15
+        _AlphaTreshold("AlphaTreshold", float) = 1.8
+        _Fade("Fade", float) = 4.5
+        _HDRFade("HDRFade", float) = 1
     }
     SubShader
     {
